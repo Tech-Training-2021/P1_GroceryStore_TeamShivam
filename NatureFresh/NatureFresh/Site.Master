@@ -53,6 +53,11 @@
                         <li><a runat="server" href="~/">Home</a></li>
                         <li><a runat="server" href="~/About">About</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
+                        </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><asp:Button ID="RegisterBtn" runat="server" Text="Register" OnClick="RegisterBtn_Click" /></li>
+                        <li><asp:Label Class="form-control" ID="NavbarUsernameLabel" runat="server" Text=""></asp:Label></li>
+                        <li><asp:Button ID="LogOutBtn" class="btn btn-danger btn-sm" runat="server" Text="LogOut" OnClick ="LogOutBtn_Click"/></li>
                     </ul>
                 </div>
             </div>

@@ -1,0 +1,7 @@
+﻿.MainContainerDiv{
+    display: flex;
+    justify-content:space-evenly;
+}
+#LoginDivId, #RegDivId {
+    margin-top: 50px;
+}
