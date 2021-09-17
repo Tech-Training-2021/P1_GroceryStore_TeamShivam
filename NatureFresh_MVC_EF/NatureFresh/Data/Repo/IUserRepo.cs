@@ -14,6 +14,7 @@ namespace Data.Repo
         void AddUser(User prd);
         void UpdateUser(int id);
         void DeleteUser(int id);
+        UserAddress GetUserAddress(int id);
         void Save();
 
     }

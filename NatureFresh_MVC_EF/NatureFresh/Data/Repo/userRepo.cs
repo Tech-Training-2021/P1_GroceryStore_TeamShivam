@@ -78,7 +78,23 @@ namespace Data.Repo
 
         }
 
-
+        public UserAddress GetUserAddress(int id)
+        {
+            if (id > 0)
+            {
+                var usrAdddress = db.UserAddresses
+                    .Where(uAdd => uAdd.Id == id)
+                    .FirstOrDefault();
+                if (usrAdddress != null)
+                    return usrAdddress;
+                else
+                    return null;
+            }
+            else
+            {
+                throw new ArgumentException("Id cannot be less than 0");
+            }
+        }
         //public void UpdateUser(int id)
         //{
         //    throw new NotImplementedException();

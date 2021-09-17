@@ -19,5 +19,19 @@ namespace NatureFresh.Models
                 Roles = user.Roles
             };
         }
+
+        public static NatureFresh.Models.UserAddress Map(Data.Entities.UserAddress uAddress)
+        {
+            return new UserAddress()
+            {
+                Id = uAddress.Id,
+                Address1 = uAddress.Address1,
+                Address2 = uAddress.Address2,
+                Address3 = uAddress.Address3,
+                Pincode = uAddress.Pincode.ToString(),
+                City = uAddress.City,
+                State = uAddress.State
+            };
+        }
     }
 }

@@ -39,7 +39,11 @@ namespace NatureFresh.Controllers
             return View(Mapper.Map(usr));
         }
 
-
+        public ActionResult GetUserAddress(int id)
+        {
+            var userAdd = repo.GetUserAddress(id);
+            return View("userAddress",Mapper.Map(userAdd));
+        }
 
 
     }
