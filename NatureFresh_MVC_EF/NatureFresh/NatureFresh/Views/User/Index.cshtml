@@ -1,0 +1,32 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>User Id</th>
+            <th>User Name</th>
+            <th>User Mobile</th>
+            <th>User Username</th>
+            <th>User Password</th>
+            <th>User Roles</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usr in Model)
+        {
+<tr>
+    <th scope="row">@usr.Id</th>
+    <td>@usr.Name</td>
+    <td>@usr.Mobile</td>
+    <td>@usr.Username</td>
+    <td>@usr.Password</td>
+    <td>@usr.Roles</td>
+</tr>}
+    </tbody>
+</table>
