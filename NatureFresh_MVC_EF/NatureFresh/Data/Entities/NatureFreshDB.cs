@@ -171,7 +171,9 @@ namespace Data.Entities
             modelBuilder.Entity<User>()
                 .HasMany(e => e.UserAddresses)
                 .WithOptional(e => e.User)
-                .HasForeignKey(e => e.Users);
+                .HasForeignKey(e => e.UserId);
         }
+
+        //public System.Data.Entity.DbSet<NatureFresh.Models.GetAllOrders> GetAllOrders { get; set; }
     }
 }
