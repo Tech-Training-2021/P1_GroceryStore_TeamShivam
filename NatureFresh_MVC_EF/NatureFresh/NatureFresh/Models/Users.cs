@@ -40,11 +40,23 @@ namespace NatureFresh.Models
 
         public int UsrAddId { get; set; }
         public int UserId { get; set; }
+
+        [Required(ErrorMessage = "Address1 Cannot Be Blank")]
         public string Address1 { get; set; }
+
+        [Required(ErrorMessage = "Address2 Cannot Be Blank")]
         public string Address2 { get; set; }
+
+        [Required(ErrorMessage = "Address3 Cannot Be Blank")]
         public string Address3 { get; set; }
+
+        [Required(ErrorMessage = "Pincode Cannot Be Blank")]
         public string Pincode { get; set; }
+
+        [Required(ErrorMessage = "City Cannot Be Blank")]
         public string City { get; set; }
+
+        [Required(ErrorMessage = "State Cannot Be Blank")]
         public string State { get; set; }
 
     }

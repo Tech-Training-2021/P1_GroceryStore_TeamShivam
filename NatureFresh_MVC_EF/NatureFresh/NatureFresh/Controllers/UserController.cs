@@ -72,6 +72,11 @@ namespace NatureFresh.Controllers
                 ViewBag.Notification = "This Account is already existed";
                 return View();
             }
+            else if (db.Users.Any(x => x.Email == objRegModel.Email))
+            {
+                ViewBag.Notification = "This Email already exists";
+                return View();
+            }
             else if (ModelState.IsValid)
             {
                 User objRegCust = new User();
@@ -79,15 +84,42 @@ namespace NatureFresh.Controllers
                 objRegModel.UserId = id;
                 repo.AddUserAddress(Mapper.DbAddressMapView(objRegModel));
                 repo.Save();
-
-                Session["IdSS"] = objRegModel.Id.ToString();
                 Session["UsernameSS"] = objRegModel.Username.ToString();
                 return RedirectToAction("Index", "Home");
             }
             return View();
+        }
 
+        [HttpGet]
+        public ActionResult Login()
+        {
+            Login objLoginModel = new Login();
+            return View(objLoginModel);
         }
 
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(Login objLoginModel)
+        {
+            var checkLogin = db.Users.Where(x => x.Username.Equals(objLoginModel.Username) && x.Password.Equals(objLoginModel.Password)).FirstOrDefault();
+
+            if (checkLogin != null)
+            {
+                Session["UsernameSS"] = objLoginModel.Username.ToString();
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ViewBag.Notification = "Wrong Username or Password";
+            }
+            return View();
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Login", "User");
+        }
     }
 }
