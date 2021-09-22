@@ -10,11 +10,14 @@ namespace Data.Repo
     interface IUserRepo
     {
         IEnumerable<User> GetUser();
-        User GetUserById(int id);
-        void AddUser(User prd);
+        //User GetUserById(int id);
+        int AddUser(User user);
         void UpdateUser(int id);
         void DeleteUser(int id);
+        //UserAddress GetUserAddress(int id);
         void Save();
 
     }
+
+
 }
