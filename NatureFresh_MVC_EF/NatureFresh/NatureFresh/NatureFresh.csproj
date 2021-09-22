@@ -124,10 +124,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CartModel.cs" />
     <Compile Include="Models\GetAllOrders.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Mapper.cs" />
@@ -176,6 +178,7 @@
     <Content Include="Views\User\allOrders.cshtml" />
     <Content Include="Views\User\register.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\Order\DispItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

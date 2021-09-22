@@ -75,5 +75,17 @@ namespace NatureFresh.Models
                 State = RegCustAddressView.State
             };
         }
+
+        public static Data.Entities.Cart DbCartMapView(NatureFresh.Models.CartModel CartModelObj)
+        {
+            return new Data.Entities.Cart()
+            {
+                Id = CartModelObj.Id,
+                CustomerId = CartModelObj.CustomerId,
+                Quantity = CartModelObj.Quantity,
+                Weight = CartModelObj.Weight,
+                ItemId = CartModelObj.ItemId
+            };
+        }
     }
 }
