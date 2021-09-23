@@ -22,9 +22,12 @@ namespace Data.Entities
         public virtual DbSet<UserAddress> UserAddresses { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Inventory> Inventories { get; set; }
+        public virtual DbSet<Cart> Carts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
+
             modelBuilder.Entity<InventoryItem>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
