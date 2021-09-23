@@ -107,6 +107,7 @@ namespace NatureFresh.Controllers
             if (checkLogin != null)
             {
                 Session["UsernameSS"] = objLoginModel.Username.ToString();
+                Session["UserId"] = checkLogin.Id;
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -115,6 +116,12 @@ namespace NatureFresh.Controllers
             }
             return View();
         }
+
+        public void getName(int id)
+        {
+
+        }
+
 
         public ActionResult Logout()
         {

@@ -11,6 +11,7 @@ namespace Data.Entities
     {
         [Key]
         [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Key]
@@ -23,12 +24,10 @@ namespace Data.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ItemId { get; set; }
 
-        [Key]
         [Column(Order = 3)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Quantity { get; set; }
 
-        [Key]
         [Column(Order = 4)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Weight { get; set; }

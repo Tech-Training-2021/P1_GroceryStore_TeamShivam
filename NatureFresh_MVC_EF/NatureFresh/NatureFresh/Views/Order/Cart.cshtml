@@ -1,0 +1,99 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = "Cart";
+}
+<div class="alert alert-warning alert-dismissible" id="minQtyAlert" hidden role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Warning!</strong> Quantity cannot be less than 1
+</div>
+<div class="alert alert-warning alert-dismissible" id="maxQtyAlert" hidden role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Warning!</strong> Quantity cannot be more than 10
+</div>
+<h2>Cart</h2>
+
+@foreach (var item in Model)
+{
+<div class="jumbotron">
+    <form method="post" id=@item.ItemId>
+        <div class="row">
+            <h3 class="mx-auto col-md-2 col-sm-2">@item.ItemId</h3>
+            @{ string qtyId = "qty" + item.ItemId;}
+            @{ string wtId = "wt" + item.ItemId;}
+            <div class="col-md-2">Qauntity:&nbsp;<input type="button" name="qty" id=@qtyId value=@item.Quantity class="disabled btn btn-primary" /></div>
+            <div class="col-md-1">
+                @{string incItemId = "inc" + item.ItemId;}
+                <button type="button" class="btn btn-success incQty" id=@incItemId><h6>+ Increase</h6></button>
+            </div>
+            <div class="col-md-1">
+                @{string descItemId = "desc" + item.ItemId;}
+                <button type="button" class="btn btn-warning descQty" id=@descItemId><h6>- Decrease</h6></button>
+            </div>
+            <div class="col-md-1">
+                @{ string remItemId = "rm" + item.ItemId;}
+                <button type="button" class="btn btn-danger rmItem" id=@remItemId><h6>x Remove</h6></button>
+            </div>
+            <div class="col-md-2">Weight:&nbsp;<input type="text" id=@wtId name="wt" value=@item.Weight class="btn btn-info" /></div>
+        </div>
+        @{ string submitBtnId = "sub" + item.ItemId;}
+        <button type="submit" id=@submitBtnId class="btn btn-primary btn-xs col-md-2 col-md-offset-5">Update</button>
+    </form>
+</div>
+}
+
+<script>
+    $(".incQty").click((e) => {
+        var id = e.currentTarget.id.substring(3);
+        var qtyElem = parseInt($("#qty" + id).val());
+        if (qtyElem >= 10)
+            $("#maxQtyAlert").show();
+        else
+            $("#qty" + id).val(qtyElem + 1);
+    })
+    $(".descQty").click((e) => {
+        var id = e.currentTarget.id.substring(4);
+        var qtyElem = parseInt($("#qty" + id).val());
+        if(qtyElem <= 1)
+            $("#minQtyAlert").show();
+        else
+            $("#qty" + id).val(qtyElem - 1);
+    })
+
+    $(".rmItem").click((e) => {
+        var id = e.currentTarget.id.substring(2);
+        $.ajax({
+            url: "RemoveCartItem",
+            method: "post",
+            data: { CustomerId: @Session["UserId"], ItemId: id },
+            success: () => {
+                location.reload();
+            },
+            error: () => {
+                alert("Error removing item");
+            }
+        })
+    })
+
+    $("form").submit((e) => {
+        e.preventDefault();
+        var qty = e.target.qty.value;
+        var wt = e.target.wt.value;
+        var obj = {
+            CustomerId: @Session["UserId"],
+            ItemId: e.currentTarget.id,
+            Quantity: qty,
+            Weight: wt
+        };
+        $.ajax({
+            url: "UpdateCart",
+            method: "post",
+            data: obj,
+            success: () => {
+                alert("update successful")
+            },
+            error: () => {
+                alert("Error in updating");
+            }
+        });
+    })
+</script>
