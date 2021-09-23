@@ -1,6 +1,8 @@
-﻿using Data.Entities;
+﻿
+using Data.Entities;
 using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +18,15 @@ namespace Data.Repo
         {
             this.db = db;
         }
-        public void AddUser(User user)
+        public int AddUser(User user)
         {
             db.Users.Add(user);
+            Save();
+            return db.Users.Local[0].Id;
+        }
+        public void AddUserAddress(UserAddress usrAddObj)
+        {
+            db.UserAddresses.Add(usrAddObj);
             Save();
         }
 
@@ -78,7 +86,29 @@ namespace Data.Repo
 
         }
 
+        public UserAddress GetUserAddress(int id)
+        {
+            if (id > 0)
+            {
+                var usrAdddress = db.UserAddresses
+                    .Where(uAdd => uAdd.Id == id)
+                    .FirstOrDefault();
+                if (usrAdddress != null)
+                    return usrAdddress;
+                else
+                    return null;
+            }
+            else
+            {
+                throw new ArgumentException("Id cannot be less than 0");
+            }
+        }
 
+        public IEnumerable<Order> GetAllOrders()
+        {
+            return db.Orders.ToList();
+
+        }
         //public void UpdateUser(int id)
         //{
         //    throw new NotImplementedException();
