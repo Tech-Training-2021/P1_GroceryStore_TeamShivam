@@ -35,7 +35,8 @@
                 <ul class="nav navbar-nav" style="float:right !important">
                     @if (Session["UsernameSS"] != null)
                     {
-                        <li><p style="color:#fff;margin-top:15px;">@Session["UsernameSS"]</p></li>
+                        <li>@Html.ActionLink(Session["UsernameSS"].ToString(), "GetUserByUsername", "User")</li>
+                        @*<li><a href="@Url.Action()"><p style="color:#fff;margin-top:15px;">@Session["UsernameSS"]</p></a></li>*@
                         <li>@Html.ActionLink("Logout", "Logout", "User")</li>
                     }
                     else

@@ -11,7 +11,10 @@ namespace NatureFresh
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if(Session["UsernameHolder"] != null)
+            {
+                UsernameLabel.Text = Session["UsernameHolder"].ToString();
+            }
         }
     }
 }
