@@ -9,6 +9,19 @@ namespace NatureFresh.Models
     {
         public static NatureFresh.Models.Users Map(Data.Entities.User user)
         {
+            List<UserAddress> address = new List<UserAddress>();
+            UserAddress uAdd = new UserAddress();
+            foreach (var temp in user.UserAddresses)
+            {
+                uAdd.Address1 = temp.Address1;
+                uAdd.Address2 = temp.Address2;
+                uAdd.Address3 = temp.Address3;
+                uAdd.City = temp.City;
+                uAdd.Pincode = temp.Pincode;
+                uAdd.State = temp.State;
+                address.Add(uAdd);
+            }
+
             return new Users()
             {
                 Id = user.Id,
@@ -16,7 +29,64 @@ namespace NatureFresh.Models
                 Mobile = user.Mobile,
                 Username = user.Username,
                 Password = user.Password,
-                Roles = user.Roles
+                Email = user.Email,
+                Roles = user.Roles,
+                useraddress = address
+            };
+        }
+
+        public static NatureFresh.Models.Users MapUVM(Data.Entities.User user)
+        {
+            return new NatureFresh.Models.Users()
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Username = user.Username,
+                Password = user.Password,
+                Mobile = user.Mobile,
+                Email = user.Email
+                
+            };
+        }
+
+        public static Data.Entities.User MapMVU(NatureFresh.Models.Users user)
+        {
+            return new Data.Entities.User()
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Username = user.Username,
+                Password = user.Password,
+                Mobile = user.Mobile,
+                Email = user.Email
+            };
+        }
+
+        public static NatureFresh.Models.UserAddress ModelAddressEntity(Data.Entities.UserAddress user)
+        {
+            return new NatureFresh.Models.UserAddress()
+            {
+                Id = user.Id,
+                Address1 = user.Address1,
+                Address2 = user.Address2,
+                Address3 = user.Address3,
+                City = user.City,
+                State = user.State,
+                Pincode = user.Pincode
+            };
+        }
+
+        public static Data.Entities.UserAddress EntityAddressModel(NatureFresh.Models.UserAddress user)
+        {
+            return new Data.Entities.UserAddress()
+            {
+                Id = user.Id,
+                Address1 = user.Address1,
+                Address2 = user.Address2,
+                Address3 = user.Address3,
+                City = user.City,
+                State = user.State,
+                Pincode = user.Pincode
             };
         }
 
@@ -47,17 +117,17 @@ namespace NatureFresh.Models
             };
         }
 
-        public static Data.Entities.User DbMapView(NatureFresh.Models.Users RegCustView)
+        public static Data.Entities.User DbMapView(NatureFresh.Models.Users usr)
         {
             return new Data.Entities.User()
             {
-                Id = RegCustView.Id,
-                Name = RegCustView.Name,
-                Username = RegCustView.Username,
-                Password = RegCustView.Password,
-                Mobile = RegCustView.Mobile,
-                Email = RegCustView.Email,
-                Roles = RegCustView.Roles
+                Id = usr.Id,
+                Name = usr.Name,
+                Username = usr.Username,
+                Password = usr.Password,
+                Mobile = usr.Mobile,
+                Email = usr.Email,
+                Roles = usr.Roles
             };
         }
 
@@ -85,6 +155,19 @@ namespace NatureFresh.Models
                 Quantity = CartModelObj.Quantity,
                 Weight = CartModelObj.Weight,
                 ItemId = CartModelObj.ItemId
+            };
+        }
+
+        public static NatureFresh.Models.Users TestMapper(Data.Entities.UserAddress usr)
+        {
+            return new NatureFresh.Models.Users()
+            {
+                Address1 = usr.Address1,
+                Address2 = usr.Address2,
+                Address3 = usr.Address3,
+                City = usr.City,
+                State = usr.State,
+                Pincode = usr.Pincode,
             };
         }
     }

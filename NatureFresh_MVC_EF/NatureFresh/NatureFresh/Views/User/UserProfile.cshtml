@@ -1,0 +1,76 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = "UserProfile";
+}
+
+<h2>Profile</h2>
+<hr />
+<br />
+
+<div style="display:flex; justify-content:space-evenly">
+    <div style="margin-left:-90px;">
+        <dl class="dlist dl-horizontal">
+            <dt>Name:</dt>
+            <dd>@Model.Name</dd>
+            <br />
+
+            <dt>Username:</dt>
+            <dd>@Model.Username</dd>
+            <br />
+
+            <dt>Password:</dt>
+            <dd>@Model.Password</dd>
+            <br />
+
+            <dt>Email:</dt>
+            <dd>@Model.Email</dd>
+            <br />
+
+            <dt>Mobile:</dt>
+            <dd>@Model.Mobile</dd>
+            <br /><br /><br /><br />
+            <dt></dt>
+            <dd><div style="text-decoration:none; font:600; font-style:italic">@Html.ActionLink("Edit Personal Info", "Edit", new { id = Model.Id })</div></dd>
+        </dl>
+            
+        @*Html.ActionLink(Name, ViewName, ControllerName)*@
+    </div>
+
+    <div>
+        <dl class="dlist dl-horizontal">
+            <dt>Address1:</dt>
+            <dd>@Model.Address1</dd>
+            <br />
+
+            <dt>Address2:</dt>
+            <dd>@Model.Address2</dd>
+            <br />
+
+            <dt>Address3:</dt>
+            <dd>@Model.Address3</dd>
+            <br />
+
+            <dt>Pincode:</dt>
+            <dd>@Model.Pincode</dd>
+            <br />
+
+            <dt>City</dt>
+            <dd>@Model.City</dd>
+            <br />
+
+            <dt>State:</dt>
+            <dd>@Model.State</dd>
+            <br />
+            <br />
+            <dt></dt>
+            <dd><div style="text-decoration:none; font:600; font-style:italic">@Html.ActionLink("Edit Address", "Edit", new { id = Model.Id })</div></dd>
+        </dl>
+    </div>
+</div>
+
+
+<div>
+    @*<div style="text-decoration:none; font:600; font-style:italic">@Html.ActionLink("Edit Personal Info", "Edit", new { id = Model.Id })</div>
+    <div style="text-decoration:none; font:600; font-style:italic">@Html.ActionLink("Edit Address", "Edit", new { id = Model.Id })</div>*@
+    <div><a href="@Url.Action("DeleteUser")" class="btn btn-danger">Delete Account</a></div>
+</div>

@@ -26,12 +26,7 @@ namespace NatureFresh.Controllers
         public ActionResult Index()
         {
             var items = repo.GetAllItems();
-            //var data = new List<NatureFresh.Models.ProductsModel>();
 
-            //foreach (var x in items)
-            //{
-            //    data.Add(Mapper.ProductDbMapView(x));
-            //}
             return View("DispItems",items);
         }
 
@@ -51,6 +46,7 @@ namespace NatureFresh.Controllers
         {
             
         }
+
 
 
     }

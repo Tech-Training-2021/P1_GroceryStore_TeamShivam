@@ -36,6 +36,8 @@ namespace NatureFresh.Models
         public string Password {get;set; }
         public int? Roles = 1;
 
+        public List<UserAddress> useraddress;
+
         //Add UserAddress
 
         public int UsrAddId { get; set; }

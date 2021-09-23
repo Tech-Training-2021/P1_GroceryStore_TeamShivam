@@ -12,7 +12,7 @@ namespace Data.Repo
         IEnumerable<User> GetUser();
         //User GetUserById(int id);
         int AddUser(User user);
-        void UpdateUser(int id);
+        User UpdateUser(User user);
         void DeleteUser(int id);
         //UserAddress GetUserAddress(int id);
         void Save();
