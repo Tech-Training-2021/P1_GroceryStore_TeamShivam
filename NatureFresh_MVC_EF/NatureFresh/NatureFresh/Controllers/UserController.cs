@@ -173,8 +173,8 @@ namespace NatureFresh.Controllers
 
         public ActionResult EditAddress(int id)
         {
-            var user = repo.GetUserById(id);
-            return View(Mapper.ModelAddressEntity(user));
+            Data.Entities.User user = repo.GetUserById(id);
+            return View(Mapper.ModelAddressEntity(user.UserAddresses));
         }
 
         [HttpPost]
@@ -182,10 +182,9 @@ namespace NatureFresh.Controllers
         {
             if (ModelState.IsValid)
             {
-                repo.UpdateUser(Mapper.EntityAddressModel(UsersObj));
-                Session["UserID"] = UsersObj.Id;
-                Session["UsernameSS"] = UsersObj.Username;
-                return RedirectToAction("Index");
+                //repo.UpdateUser(Mapper.EntityAddressModel(UsersObj));
+                //Session["UserID"] = UsersObj.Id;
+                //return RedirectToAction("Index");
             }
             return View(UsersObj);
         }

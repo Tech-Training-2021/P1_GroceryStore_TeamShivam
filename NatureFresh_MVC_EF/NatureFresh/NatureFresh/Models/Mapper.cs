@@ -62,18 +62,21 @@ namespace NatureFresh.Models
             };
         }
 
-        public static NatureFresh.Models.UserAddress ModelAddressEntity(Data.Entities.UserAddress user)
+        public static NatureFresh.Models.UserAddress ModelAddressEntity(ICollection<Data.Entities.UserAddress> user)
         {
-            return new NatureFresh.Models.UserAddress()
+            //List<User>
+            NatureFresh.Models.UserAddress obj = new NatureFresh.Models.UserAddress();
+            foreach(var item in user)
             {
-                Id = user.Id,
-                Address1 = user.Address1,
-                Address2 = user.Address2,
-                Address3 = user.Address3,
-                City = user.City,
-                State = user.State,
-                Pincode = user.Pincode
-            };
+                obj.Id = item.Id;
+                obj.Address1 = item.Address1;
+                obj.Address2 = item.Address2;
+                obj.Address3 = item.Address3;
+                obj.Pincode = item.Pincode;
+                obj.City = item.City;
+                obj.State = item.State;
+            }
+            return obj;
         }
 
         public static Data.Entities.UserAddress EntityAddressModel(NatureFresh.Models.UserAddress user)
