@@ -75,5 +75,36 @@ namespace Data.Repo
             else
                 throw new ArgumentException("Item is not found");
         }
+
+        public void RemoveCartItem2(int? UserId, int ItemId)
+        {
+            var CartItem = (from item in db.Carts
+                            where item.ItemId == ItemId && item.CustomerId == UserId
+                            select item).FirstOrDefault();
+            if (CartItem != null)
+            {
+                db.Carts.Remove(CartItem);
+            }
+            else
+                throw new ArgumentException("Item is not found");
+        }
+
+        public int AddOrder(Order OrderObj)
+        {
+            db.Orders.Add(OrderObj);
+            db.SaveChanges();
+            int OId = OrderObj.Id;
+            return OId;
+        }
+
+        public void AddOrderItem(OrderItem OrderItemObj)
+        {
+            db.OrderItems.Add(OrderItemObj);
+        }
+
+        public void Save()
+        {
+            db.SaveChanges();
+        }
     }
 }
