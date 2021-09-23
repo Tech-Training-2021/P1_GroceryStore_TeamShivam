@@ -17,7 +17,7 @@ namespace Data.Entities
 
         public int Id { get; set; }
 
-        public int? Users { get; set; }
+        public int? UserId { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -29,7 +29,7 @@ namespace Data.Entities
         [StringLength(50)]
         public string Address3 { get; set; }
 
-        public int Pincode { get; set; }
+        public string Pincode { get; set; }
 
         [Required]
         [StringLength(30)]

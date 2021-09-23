@@ -1,0 +1,62 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "allOrders";
+}
+
+<h2>allOrders</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            User's' Id
+        </th>
+        <th>
+            Outlet's Id
+        </th>
+        <th>
+            User Address's Id'
+        </th>
+        <th>
+            Date
+        </th>
+        <th>
+            Total Price
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @item.Id
+        </td>
+        <td>
+            @item.Users
+        </td>
+        <td>
+            @item.Outlets
+        </td>
+        <td>
+            @item.UsersAddress
+        </td>
+        <td>
+            @item.Date
+        </td>
+        <td>
+            @item.TotalPrice
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

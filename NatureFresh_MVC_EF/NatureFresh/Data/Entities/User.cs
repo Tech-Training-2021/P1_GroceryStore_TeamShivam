@@ -26,6 +26,10 @@ namespace Data.Entities
         [StringLength(10)]
         public string Mobile { get; set; }
 
+        [Required]
+        public string Email { get; set; }
+
+
         [StringLength(12)]
         public string Aadhar { get; set; }
 
