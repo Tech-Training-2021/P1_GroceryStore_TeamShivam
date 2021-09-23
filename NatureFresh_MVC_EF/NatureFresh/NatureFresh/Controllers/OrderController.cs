@@ -45,7 +45,7 @@ namespace NatureFresh.Controllers
 
         public ActionResult Cart()
         {
-            var items = repo.GetCartItems((int)Session["UserId"]);
+           var items = repo.GetCartItems((int)Session["UserId"]);
             return View(items);
         }
     }

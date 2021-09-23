@@ -3,94 +3,67 @@
     ViewBag.Title = "View";
 }
 
-<h2>View</h2>
 
-<div class="row">
-    <div class="col-md-3">
-        Id
-    </div>
-    <div class="col-md-3">
-        Name
-    </div>
-    <div class="col-md-3">
-        Price
-    </div>
-    <div class="col-md-3">
-        Unit Id
-    </div>
-</div>
-@foreach(var item in Model)
-            {
-<form id=@item.ID>
-    <div class="row">
-        <div class="col-md-2">
-            @item.Name
-        </div>
-        <div class="col-md-2">
-            @item.Price
-        </div>
-        <div class="col-md-2">
-            @item.Units
-        </div>
-        <div class="col-md-2">
-            Weight<input type="text" id="itemWeight" />
-        </div>
-        <div class="col-md-2">
-            Quantity<input type="text" id="itemQuantity" />
-        </div>
-        <div class="col-md-2">
-            <button type="submit" id="submitBtn" class="btn AddItemBtn btn-primary">Add</button>
-        </div>
-    </div>
-</form>
-            }
+<h2 class="text-center">My Cart</h2>
 
+<br />
+
+<br />
+<table class="table">
+    <thead class="thead-dark" style="background-color: #006EB3 ">
+        <tr>
+            <th class="col-md-2 text-center">Name</th>
+            <th class="col-md-2 text-center">Price</th>
+            <th class="col-md-2 text-center">Unit</th>
+            <th class="col-md-2 text-center">Weight</th>
+            <th class="col-md-2 text-center">Quantity</th>
+            <th class="col-md-2 text-center"></th>
+        </tr>
+    </thead>
+</table>
+
+@foreach (var item in Model)
+{
+    <form id=@item.ID>
+        <table class="table" style="background-color: aquamarine  ">
+            <tbody>
+                <tr>
+                    <td class="col-md-2 text-center">@item.Name</td>
+                    <td class="col-md-2 text-center">@item.Price</td>
+                    <td class="col-md-2 text-center">@item.Units</td>
+                    <td>
+                        
+                         <input type="button" value="-" class="minus" id="min">
+                           
+                         <input name="qty" id="quantity" type="text" value="1" class="qty" style="width:90px">
+                            
+                         <input type="button" value="+" class="plus" id="plus">
+                            
+                      
+                    <td>
+                        <input type="button" value="-" class="minus" id="min">
+
+                        <input name="qty" id="quantity" type="text" value="1" class="qty" style="width:90px">
+
+                        <input type="button" value="+" class="plus" id="plus">
+                    </td>
+                    <td class="col-md-2 text-center"> <button type="submit" id="submitBtn" class="btn AddItemBtn btn-primary">Add</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+
+}
 <script>
-    $('form').submit((event) => {
-        event.preventDefault();
-        var sBtn = event.target.submitBtn;
-        var customerId = @Session["UserId"].ToString();
-        var itemId = event.currentTarget.id;
-        console.log($(sBtn).html())
-        if ($(sBtn).html() == "Remove") {
-            $.ajax({
-                url: "RemoveCartItem",
-                type:"post",
-                data: { CustomerId: customerId, ItemId: itemId },
-                success: () =>{
-                $(sBtn).html("Add")
-            },
-                error: () => {
-                    alert("Error in deleting item");
-                }
-            })
+    $('.minus').click(function () {
+        quantityField = $(this).next();
+        if (quantityField.val() != 0) {
+            quantityField.val(parseInt(quantityField.val(), 10) - 1);
         }
-        else {
-            var wt = event.target.itemWeight.value;
-            var qty = event.target.itemQuantity.value;
-            var obj =
-            {
-                CustomerId: customerId,
-                ItemId: itemId,
-                Quantity: qty,
-                Weight: wt
-            }
-
-            $.ajax({
-                url: "AddToCart",
-                type: 'post',
-                data: obj,
-                success: () => {
-                    $(sBtn).html("Remove");
-                },
-                error: () => {
-                    alert("Error in adding item");
-                }
-
-            });
-        }
-
-
+    });
+    $('.plus').click(function () {
+        quantityField = $(this).prev();
+        quantityField.val(parseInt(quantityField.val(), 10) + 1);
     });
 </script>
 
