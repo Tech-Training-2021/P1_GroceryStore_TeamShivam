@@ -37,7 +37,7 @@ namespace NatureFresh.Controllers
         public ActionResult GetUserById(int id)
         {
             var usr = repo.GetUserById(id);
-            return View(Mapper.Map(usr));
+            return View("index",Mapper.Map(usr));
         }
 
         public ActionResult GetUserAddress(int id)

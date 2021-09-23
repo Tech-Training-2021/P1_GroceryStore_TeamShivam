@@ -79,6 +79,9 @@ namespace Data.Repo
                     //.Include("Role")
                     .Where(p => p.Id == id)
                     .FirstOrDefault();
+                UserAddress tmp = usr.UserAddresses.FirstOrDefault();
+                string tmp3 = tmp.State;
+                var tmp2 = usr.UserAddresses.FirstOrDefault();
                 if (usr != null)
                     return usr;
                 else

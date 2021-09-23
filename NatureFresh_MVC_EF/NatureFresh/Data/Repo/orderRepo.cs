@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace Data.Repo
 {
+    
     public class orderRepo
     {
         private NatureFreshDB db;
@@ -17,7 +18,8 @@ namespace Data.Repo
             this.db = db;
         }
         public IEnumerable<Cart> GetCartItems(int UserId)
-        {
+        
+            {
             var items = (from item in db.Carts
                          where item.CustomerId == UserId
                          select item);
@@ -37,7 +39,13 @@ namespace Data.Repo
         [HttpPost]
         public void AddItemToCart(Cart cart)
         {
-            db.Carts.Add(cart);
+            db.Carts.Add(new Cart()
+            {
+                CustomerId = cart.CustomerId,
+                ItemId = cart.ItemId,
+                Weight = cart.Weight,
+                Quantity = cart.Quantity
+            });
             db.SaveChanges();
         }
 
@@ -54,7 +62,7 @@ namespace Data.Repo
             updatedCart.Weight = cart.Weight;
             db.SaveChanges();
         }
-        public void RemoveCartItem(int UserId,int ItemId)
+        public void RemoveCartItem(int? UserId,int ItemId)
         {
             var CartItem = (from item in db.Carts
                         where item.ItemId == ItemId && item.CustomerId == UserId

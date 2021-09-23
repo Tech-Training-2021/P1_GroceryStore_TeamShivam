@@ -107,6 +107,8 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserAddress.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repo\CartMap.cs" />
+    <Compile Include="Repo\CartModel.cs" />
     <Compile Include="Repo\IUserRepo.cs" />
     <Compile Include="Repo\orderRepo.cs" />
     <Compile Include="Repo\userRepo.cs" />

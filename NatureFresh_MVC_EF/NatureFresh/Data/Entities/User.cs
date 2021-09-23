@@ -13,6 +13,7 @@ namespace Data.Entities
         {
             Orders = new HashSet<Order>();
             Outlets = new HashSet<Outlet>();
+            Carts = new HashSet<Cart>();
             UserAddresses = new HashSet<UserAddress>();
         }
 
@@ -45,6 +46,7 @@ namespace Data.Entities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Cart> Carts { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Outlet> Outlets { get; set; }
