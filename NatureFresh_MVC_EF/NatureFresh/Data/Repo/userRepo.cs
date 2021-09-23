@@ -30,7 +30,10 @@ namespace Data.Repo
             Save();
         }
 
-
+        public void getName(int id)
+        {
+            //var result = (from item in User select item.Role.Name WHERE item.Id == id);
+        }
 
         public void DeleteUser(int id)
         {

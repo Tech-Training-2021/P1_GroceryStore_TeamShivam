@@ -65,7 +65,7 @@ namespace NatureFresh.Models
         {
             return new Data.Entities.UserAddress()
             {
-                Id = RegCustAddressView.UsrAddId,
+                Id =RegCustAddressView.UsrAddId,
                 UserId = RegCustAddressView.UserId,
                 Address1 = RegCustAddressView.Address1,
                 Address2 = RegCustAddressView.Address2,
@@ -81,10 +81,10 @@ namespace NatureFresh.Models
             return new Data.Entities.Cart()
             {
                 Id = CartModelObj.Id,
-                CustomerId = CartModelObj.CustomerId,
-                Quantity = CartModelObj.Quantity,
-                Weight = CartModelObj.Weight,
-                ItemId = CartModelObj.ItemId
+                CustomerId = (int)CartModelObj.CustomerId,
+                Quantity = (int)CartModelObj.Quantity,
+                Weight = (int)CartModelObj.Weight,
+                ItemId = (int)CartModelObj.ItemId
             };
         }
     }
