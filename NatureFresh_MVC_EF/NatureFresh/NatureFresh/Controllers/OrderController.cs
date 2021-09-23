@@ -25,29 +25,32 @@ namespace NatureFresh.Controllers
         // GET: Order
         public ActionResult Index()
         {
+            if (Session["UserId"] == null)
+                return RedirectToAction("Login", "User", new { area = "" });
             var items = repo.GetAllItems();
-
             return View("DispItems",items);
         }
 
-        public void AddToCart(CartModel cart)
+        public void AddToCart(Models.CartModel cart)
         {
-            Data.Entities.Cart cartobj = new Data.Entities.Cart();
-            cartobj.CustomerId = 19;
-            cartobj.ItemId = 2;
-            cartobj.Weight = 250;
-            cartobj.Quantity = 3;
-            db.Carts.Add(cartobj);
-            db.SaveChanges();
-            //repo.AddItemToCart(Mapper.DbCartMapView(cart));
-            //return View();
+            repo.AddItemToCart(Mapper.DbCartMapView(cart));
         }
-        public void UpdateItemQnty(int qnty)
+        public void UpdateCart(Models.CartModel cart)
         {
-            
+            repo.UpdateCart(Mapper.DbCartMapView(cart));
         }
 
+        public void RemoveCartItem(Cart obj)
+        {
+            repo.RemoveCartItem((int?)obj.CustomerId, obj.ItemId);
+        }
 
-
+        public ActionResult Cart()
+        {
+            if (Session["UserId"] == null)
+                return RedirectToAction("Login", "User", new { area = "" });
+            var items = repo.GetCartItems((int)Session["UserId"]);
+            return View(items);
+        }
     }
 }

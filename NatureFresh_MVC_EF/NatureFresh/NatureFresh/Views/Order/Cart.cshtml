@@ -1,0 +1,160 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = "Cart";
+}
+<div class="alert alert-warning alert-dismissible" id="minQtyAlert" hidden role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Warning!</strong> Quantity cannot be less than 1
+</div>
+<div class="alert alert-warning alert-dismissible" id="maxQtyAlert" hidden role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Warning!</strong> Quantity cannot be more than 10
+</div>
+<h2>Cart</h2>
+@{ decimal getPrice(int qty,int wt,int rate,string unit) {
+        int totQnty = qty * wt;
+        decimal price;
+        if(unit == "gram")
+        {
+            price = ((decimal)totQnty / 1000) * rate;
+        }
+        else
+        {
+            price = qty * rate;
+        }
+        return Math.Ceiling(price);
+    }
+    }
+    @foreach (var item in Model)
+    {
+<div class="jumbotron">
+    <form method="post" id=@item.ItemId>
+        <div class="row bg-warning">
+            <h3 class="mx-auto col-md-2 col-sm-2">@item.Item.Name</h3>
+            @{ string qtyId = "qty" + item.ItemId;}
+            @{ string wtId = "wt" + item.ItemId;}
+            <div class="col-md-2">Qauntity:&nbsp;<input type="button" name="qty" id=@qtyId value=@item.Quantity class="disabled btn btn-primary" /></div>
+            <div class="col-md-1">
+                @{string incItemId = "inc" + item.ItemId;}
+                <button type="button" class="btn btn-success incQty" id=@incItemId><h6>+ Increase</h6></button>
+            </div>
+            <div class="col-md-1">
+                @{string descItemId = "desc" + item.ItemId;}
+                <button type="button" class="btn btn-warning descQty" id=@descItemId><h6>- Decrease</h6></button>
+            </div>
+            <div class="col-md-1">
+                @{ string remItemId = "rm" + item.ItemId;}
+                <button type="button" class="btn btn-danger rmItem" id=@remItemId><h6>x Remove</h6></button>
+            </div>
+            @{string rate = "rate" + item.ItemId; }
+            @{string unit = "unit" + item.ItemId; }
+            @if (item.Item.Unit.Name == "gram")
+            {
+                <div class="col-md-2">Weight:&nbsp;<input type="text" id=@wtId name="wt" value=@item.Weight class="btn btn-info mr-1" /></div>
+            }
+
+            @*@if (item.Item.Unit.Name == "gram") { getPrice((int)item.Quantity, (int)item.Weight, (int)item.Item.Price, item.Item.Unit.Name); } else { getPrice((int)item.Quantity, 1, (int)item.Item.Price, item.Item.Unit.Name); }*@
+
+            <div class="col-md-1 col-md-offset-1 mx-1"><label class="btn disabled btn-lg btn-primary" id=@rate name="rate">@getPrice((int)item.Quantity, (int)item.Weight, (int)item.Item.Price, item.Item.Unit.Name)</label></div>
+            <div class="col-md-1"><label name="unit" class="btn disabled btn-info" id=@unit>@item.Item.Unit.Name</label></div>
+            @{ string fixedRt = "rt" + item.ItemId;}
+            <span id=@fixedRt hidden>@item.Item.Price</span>
+        </div>
+        @{ string submitBtnId = "sub" + item.ItemId;}
+        <button type="submit" id=@submitBtnId class="btn btn-primary btn-xs col-md-2 col-md-offset-5">Update</button>
+    </form>
+</div>
+}
+
+<div class="row">
+    <div class="col-md-3 col-md-offset-6"><a type="button" href="Checkout" class="btn btn-success">CHECKOUT</a></div>
+</div>
+
+<script>
+    $(".incQty").click((e) => {
+        var id = e.currentTarget.id.substring(3);
+        var qtyElem = parseInt($("#qty" + id).val());
+        if (qtyElem >= 10)
+            $("#maxQtyAlert").show();
+        else
+            $("#qty" + id).val(qtyElem + 1);
+    })
+    $(".descQty").click((e) => {
+        var id = e.currentTarget.id.substring(4);
+        var qtyElem = parseInt($("#qty" + id).val());
+        if(qtyElem <= 1)
+            $("#minQtyAlert").show();
+        else
+            $("#qty" + id).val(qtyElem - 1);
+    })
+
+    $(".rmItem").click((e) => {
+        var id = e.currentTarget.id.substring(2);
+        $.ajax({
+            url: "RemoveCartItem",
+            method: "post",
+            data: { CustomerId: @Session["UserId"], ItemId: id },
+            success: () => {
+                location.reload();
+            },
+            error: () => {
+                alert("Error removing item");
+            }
+        })
+    })
+
+    $("form").submit((e) => {
+        e.preventDefault();
+        var qty = e.target.qty.value;
+        var wt = null;
+        console.log(e.target.unit);
+        @*var rate = $("#rate" + e.currentTarget.id).html();*@
+
+        var rate = $("#rt" + e.currentTarget.id).html();
+        var unit = $("#unit" + e.currentTarget.id).html();
+        console.log(rate+unit)
+        if (unit == "gram") {
+            wt = e.target.wt.value;
+        }
+        var obj = {
+            CustomerId: @Session["UserId"],
+            ItemId: e.currentTarget.id,
+            Quantity: qty,
+            Weight: wt
+        };
+        $.ajax({
+            url: "UpdateCart",
+            method: "post",
+            data: obj,
+            success: () => {
+                console.log("unit    " + unit);
+                if (unit == "gram") {
+                    $("#rate" + e.currentTarget.id).html(UpdatePrice(parseFloat(qty), parseFloat(wt), parseFloat(rate), unit));
+                }
+                else {
+                    $("#rate" + e.currentTarget.id).html(UpdatePrice(parseFloat(qty),1.0, parseFloat(rate), unit));
+            }
+            },
+            error: () => {
+                alert("Error in updating");
+            }
+        });
+    })
+
+    function UpdatePrice(qty, wt = 1.0, rate, unit) {
+        var totQnty = qty * wt;
+        var price;
+        console.log("qty   "+qty);
+        console.log("wt    "+wt);
+        console.log("totQnty    "+totQnty);
+        console.log("rate  "+rate);
+        if (unit != "gram") {
+            price = qty * rate;
+        }
+        else {
+            price = (totQnty / 1000) * rate;
+        }
+        console.log("price   "+price );
+        return Math.ceil(price);
+    }
+</script>

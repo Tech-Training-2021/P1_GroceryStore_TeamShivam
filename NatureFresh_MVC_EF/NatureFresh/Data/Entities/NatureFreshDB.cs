@@ -172,6 +172,11 @@ namespace Data.Entities
                 .HasForeignKey(e => e.Users);
 
             modelBuilder.Entity<User>()
+                .HasMany(e => e.Carts)
+                .WithOptional(e => e.User)
+                .HasForeignKey(e => e.CustomerId);
+
+            modelBuilder.Entity<User>()
                 .HasMany(e => e.UserAddresses)
                 .WithOptional(e => e.User)
                 .HasForeignKey(e => e.UserId);

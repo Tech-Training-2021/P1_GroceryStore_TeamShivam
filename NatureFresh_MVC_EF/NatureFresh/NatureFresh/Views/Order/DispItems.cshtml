@@ -5,33 +5,6 @@
 
 <h2>View</h2>
 
-@*<table class="table table-bordered table-responsive table-hover table-striped">
-    <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Price</th>
-            <th scope="col">UnitId</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-<tr>
-    <td>@item.ID</td>
-    <td>@item.Name</td>
-    <td>@item.Price</td>
-    <td>@item.Units</td>
-    <td>Weight<input type="text" id="itemWeight" value="250" /></td>
-    <td>Quantity<input type="text" id="itemQuantity" value="3" /></td>
-    <td><button type="submit" class="btn AddItemBtn btn-primary">Add</button></td>
-</tr>
-        }
-
-    </tbody>
-</table>*@
-
-
 <div class="row">
     <div class="col-md-3">
         Id
@@ -66,44 +39,56 @@
             Quantity<input type="text" id="itemQuantity" />
         </div>
         <div class="col-md-2">
-            <button type="submit" class="btn AddItemBtn btn-primary">Add</button>
+            <button type="submit" id="submitBtn" class="btn AddItemBtn btn-primary">Add</button>
         </div>
     </div>
 </form>
             }
 
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $('form').submit((event) => {
         event.preventDefault();
-        @*console.log(event.target);*@
-        @*console.log(event.target.+ "    "+event.target.itemWeight.value +"      " +event.target.itemQuantity.value)*@
-        @*console.log(event.currentTarget.id);*@
-        var wt = event.target.itemWeight.value;
-        var qty = event.target.itemQuantity.value;
-            @*CustomerId = @Session["IdSS"];*@
-        var obj =
-        {
-            CustomerId: 14,
-            ItemId: event.currentTarget.id,
-            Quantity: qty,
-            Weight: wt
-        }
-
-        $.ajax({
-            url: "AddToCart",
-            type: 'post',
-            data: obj,
-            success: () => {
-                alert("Successfull");
+        var sBtn = event.target.submitBtn;
+        var customerId = @Session["UserId"].ToString();
+        var itemId = event.currentTarget.id;
+        console.log($(sBtn).html())
+        if ($(sBtn).html() == "Remove") {
+            $.ajax({
+                url: "RemoveCartItem",
+                type:"post",
+                data: { CustomerId: customerId, ItemId: itemId },
+                success: () =>{
+                $(sBtn).html("Add")
             },
-            error: () => {
-                alert("Error");
+                error: () => {
+                    alert("Error in deleting item");
+                }
+            })
+        }
+        else {
+            var wt = event.target.itemWeight.value;
+            var qty = event.target.itemQuantity.value;
+            var obj =
+            {
+                CustomerId: customerId,
+                ItemId: itemId,
+                Quantity: qty,
+                Weight: wt
             }
 
-        });
+            $.ajax({
+                url: "AddToCart",
+                type: 'post',
+                data: obj,
+                success: () => {
+                    $(sBtn).html("Remove");
+                },
+                error: () => {
+                    alert("Error in adding item");
+                }
+
+            });
+        }
 
 
     });

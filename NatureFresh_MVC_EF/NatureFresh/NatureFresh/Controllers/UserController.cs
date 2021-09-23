@@ -40,6 +40,7 @@ namespace NatureFresh.Controllers
         {
             id = Convert.ToInt32(Session["UserID"]);
             var usr = repo.GetUserById(id);
+
             return View("UserProfile",usr);
         }
 
@@ -57,6 +58,7 @@ namespace NatureFresh.Controllers
             usr.State = tmp.State;
             usr.Pincode = tmp.Pincode;
             return View("UserProfile", usr);
+
         }
 
         public ActionResult GetUserAddress(int id)
@@ -205,6 +207,7 @@ namespace NatureFresh.Controllers
             if (checkLogin != null)
             {
                 Session["UsernameSS"] = objLoginModel.Username.ToString();
+                Session["UserId"] = checkLogin.Id;
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -213,6 +216,12 @@ namespace NatureFresh.Controllers
             }
             return View();
         }
+
+        public void getName(int id)
+        {
+
+        }
+
 
         public ActionResult Logout()
         {
