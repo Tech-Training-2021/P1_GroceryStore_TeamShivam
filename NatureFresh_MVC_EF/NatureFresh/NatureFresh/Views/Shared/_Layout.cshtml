@@ -6,23 +6,38 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @*@Styles.Render("~/Content/UDCss.css")*@
+    <link href="~/Content/UDCss/NavbarCss.css" rel="stylesheet" />
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("NatureFresh", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <img src="~/Images/LeafLogo.png" class="img-center" height="50" width="50" />
+                @*@Html.ActionLink("NatureFresh", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" style="float:right !important;">
+                    @if (Session["UsernameSS"] != null)
+                    {
+                        <li>@Html.ActionLink(Session["UsernameSS"].ToString(), "GetUserByUsername", "User")</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("SignUp", "register", "User")</li>
+                        <li>@Html.ActionLink("SignIn", "Login", "User")</li>
+                    }
+                </ul>
+                <ul class="nav navbar-nav" style="margin-right:20px; float:right !important;">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
@@ -30,19 +45,6 @@
                     {
                         <li>@Html.ActionLink("ItemList", "Index", "Order")</li>
                         <li>@Html.ActionLink("Cart", "Cart", "Order")</li>
-                    }
-                </ul>
-                <ul class="nav navbar-nav" style="float:right !important">
-                    @if (Session["UsernameSS"] != null)
-                    {
-                        <li>@Html.ActionLink(Session["UsernameSS"].ToString(), "GetUserByUsername", "User")</li>
-                        @*<li><a href="@Url.Action()"><p style="color:#fff;margin-top:15px;">@Session["UsernameSS"]</p></a></li>*@
-                        <li>@Html.ActionLink("Logout", "Logout", "User")</li>
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("SignUp", "register", "User")</li>
-                        <li>@Html.ActionLink("SignIn", "Login", "User")</li>
                     }
                 </ul>
             </div>
