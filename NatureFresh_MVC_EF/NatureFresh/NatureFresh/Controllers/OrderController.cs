@@ -26,32 +26,27 @@ namespace NatureFresh.Controllers
         public ActionResult Index()
         {
             var items = repo.GetAllItems();
-            //var data = new List<NatureFresh.Models.ProductsModel>();
-
-            //foreach (var x in items)
-            //{
-            //    data.Add(Mapper.ProductDbMapView(x));
-            //}
             return View("DispItems",items);
         }
 
         public void AddToCart(CartModel cart)
         {
-            Data.Entities.Cart cartobj = new Data.Entities.Cart();
-            cartobj.CustomerId = 19;
-            cartobj.ItemId = 2;
-            cartobj.Weight = 250;
-            cartobj.Quantity = 3;
-            db.Carts.Add(cartobj);
-            db.SaveChanges();
-            //repo.AddItemToCart(Mapper.DbCartMapView(cart));
-            //return View();
+            repo.AddItemToCart(Mapper.DbCartMapView(cart));
         }
-        public void UpdateItemQnty(int qnty)
+        public void UpdateCart(CartModel cart)
         {
-            
+            repo.UpdateCart(Mapper.DbCartMapView(cart));
         }
 
+        public void RemoveCartItem(Cart obj)
+        {
+            repo.RemoveCartItem(obj.CustomerId, obj.ItemId);
+        }
 
+        public ActionResult Cart()
+        {
+            var items = repo.GetCartItems((int)Session["UserId"]);
+            return View(items);
+        }
     }
 }

@@ -16,9 +16,13 @@ namespace Data.Repo
         {
             this.db = db;
         }
-        public IEnumerable<Cart> GetCartItems()
+        public IEnumerable<Cart> GetCartItems(int UserId)
         {
-            return db.Carts.ToList();
+            var items = (from item in db.Carts
+                         where item.CustomerId == UserId
+                         select item);
+            return items.ToList();
+
         }
 
 
@@ -27,19 +31,27 @@ namespace Data.Repo
             return db.InventoryItems.ToList();
         }
 
+
+        //public IEnumerable<>
+
         [HttpPost]
         public void AddItemToCart(Cart cart)
         {
             db.Carts.Add(cart);
             db.SaveChanges();
         }
-        public void UpdateCartQuantity(int UserId,int ItmId, int qty,int wt)
+
+        public void tmpCartItem(int id)
+        {
+
+        }
+        public void UpdateCart(Cart cart)
         {
             Cart updatedCart  = (from item in db.Carts
-                                where item.ItemId == ItmId && item.CustomerId == UserId
+                                where item.ItemId == cart.ItemId && item.CustomerId == cart.CustomerId
                                 select item).FirstOrDefault();
-            updatedCart.Quantity = qty;
-            updatedCart.Weight = wt;
+            updatedCart.Quantity = cart.Quantity;
+            updatedCart.Weight = cart.Weight;
             db.SaveChanges();
         }
         public void RemoveCartItem(int UserId,int ItemId)
