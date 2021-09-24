@@ -27,6 +27,11 @@ namespace Data.Repo
 
         }
 
+        public IEnumerable<Order> getOrderById(int id)
+        {
+            var order = (from odr in db.Orders where odr.Users == id select odr);
+            return order.ToList();
+        }
 
         public IEnumerable<InventoryItem> GetAllItems()
         {
@@ -53,6 +58,7 @@ namespace Data.Repo
         {
 
         }
+
         public void UpdateCart(Cart cart)
         {
             Cart updatedCart  = (from item in db.Carts
@@ -61,6 +67,10 @@ namespace Data.Repo
             updatedCart.Quantity = cart.Quantity;
             updatedCart.Weight = cart.Weight;
             db.SaveChanges();
+        }
+        public IEnumerable<Inventory> GetAllInventory()
+        {
+            return db.Inventories.ToList();
         }
         public void RemoveCartItem(int? UserId,int ItemId)
         {

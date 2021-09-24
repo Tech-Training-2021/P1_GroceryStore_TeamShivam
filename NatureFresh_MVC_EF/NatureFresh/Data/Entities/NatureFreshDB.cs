@@ -26,8 +26,6 @@ namespace Data.Entities
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
-
             modelBuilder.Entity<InventoryItem>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
@@ -36,6 +34,7 @@ namespace Data.Entities
                 .HasMany(e => e.Inventories)
                 .WithOptional(e => e.InventoryItem)
                 .HasForeignKey(e => e.InventoryItems);
+
 
             modelBuilder.Entity<OrderItem>()
                 .Property(e => e.Name)

@@ -51,6 +51,13 @@ namespace NatureFresh.Controllers
             var items = repo.GetCartItems((int)Session["UserId"]);
             return View(items);
         }
+
+        public ActionResult GetAllOrderById()
+        {
+            var tmp = repo.getOrderById((int)Session["UserId"]);
+
+            return View("Orders", tmp);
+        }
         public ActionResult Checkout(int? OutletId)
         {
             int sessionId = Convert.ToInt32(Session["UserId"]);
@@ -85,6 +92,7 @@ namespace NatureFresh.Controllers
 
             int orderID = repo.AddOrder(OrderObj);
 
+            var inv = repo.GetAllInventory();
             foreach (var item in res)
             {
                 OrderItem OrderItemObj = new OrderItem();
@@ -98,8 +106,8 @@ namespace NatureFresh.Controllers
                 repo.RemoveCartItem2(sessionId, item.Item.ID);
             }
             repo.Save();
-
-            return View();
+            //GetAllOrderById();
+            return RedirectToAction("Home", "Index");
         }
 
          decimal getPrice(int qty, int wt, int rate, string unit)

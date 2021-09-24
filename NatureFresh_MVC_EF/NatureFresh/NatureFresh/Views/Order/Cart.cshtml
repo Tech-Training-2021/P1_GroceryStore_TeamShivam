@@ -11,10 +11,11 @@
     <strong>Warning!</strong> Quantity cannot be more than 10
 </div>
 <h2>Cart</h2>
-@{ decimal getPrice(int qty,int wt,int rate,string unit) {
+@{ decimal getPrice(int qty, int wt, int rate, string unit)
+    {
         int totQnty = qty * wt;
         decimal price;
-        if(unit == "gram")
+        if (unit == "gram")
         {
             price = ((decimal)totQnty / 1000) * rate;
         }
@@ -24,59 +25,58 @@
         }
         return Math.Ceiling(price);
     }
-    }
-    @foreach (var item in Model)
-    {
-<div class="jumbotron">
-    <form method="post" id=@item.ItemId>
-        <div class="row bg-warning">
-            <h3 class="mx-auto col-md-2 col-sm-2">@item.Item.Name</h3>
-            @{ string qtyId = "qty" + item.ItemId;}
-            @{ string wtId = "wt" + item.ItemId;}
-            <div class="col-md-2">Qauntity:&nbsp;<input type="button" name="qty" id=@qtyId value=@item.Quantity class="disabled btn btn-primary" /></div>
-            <div class="col-md-1">
-                @{string incItemId = "inc" + item.ItemId;}
-                <button type="button" class="btn btn-success incQty" id=@incItemId><h6>+ Increase</h6></button>
-            </div>
-            <div class="col-md-1">
-                @{string descItemId = "desc" + item.ItemId;}
-                <button type="button" class="btn btn-warning descQty" id=@descItemId><h6>- Decrease</h6></button>
-            </div>
-            <div class="col-md-1">
-                @{ string remItemId = "rm" + item.ItemId;}
-                <button type="button" class="btn btn-danger rmItem" id=@remItemId><h6>x Remove</h6></button>
-            </div>
-            @{string rate = "rate" + item.ItemId; }
-            @{string unit = "unit" + item.ItemId; }
-            @if (item.Item.Unit.Name == "gram")
-            {
-                <div class="col-md-2">Weight:&nbsp;<input type="text" id=@wtId name="wt" value=@item.Weight class="btn btn-info mr-1" /></div>
-            }
-
-            @*@if (item.Item.Unit.Name == "gram") { getPrice((int)item.Quantity, (int)item.Weight, (int)item.Item.Price, item.Item.Unit.Name); } else { getPrice((int)item.Quantity, 1, (int)item.Item.Price, item.Item.Unit.Name); }*@
-
-            <div class="col-md-1 col-md-offset-1 mx-1"><label class="btn disabled btn-lg btn-primary" id=@rate name="rate">@getPrice((int)item.Quantity, (int)item.Weight, (int)item.Item.Price, item.Item.Unit.Name)</label></div>
-            <div class="col-md-1"><label name="unit" class="btn disabled btn-info" id=@unit>@item.Item.Unit.Name</label></div>
-            @{ string fixedRt = "rt" + item.ItemId;}
-            <span id=@fixedRt hidden>@item.Item.Price</span>
-        </div>
-        @{ string submitBtnId = "sub" + item.ItemId;}
-        <button type="submit" id=@submitBtnId class="btn btn-primary btn-xs col-md-2 col-md-offset-5">Update</button>
-    </form>
-</div>
 }
+@foreach (var item in Model)
+{
+    <div class="jumbotron">
+        <form method="post" id=@item.ItemId>
+            <div class="row bg-warning">
+                <h3 class="mx-auto col-md-2 col-sm-2">@item.Item.Name</h3>
+                @{ string qtyId = "qty" + item.ItemId;}
+                @{ string wtId = "wt" + item.ItemId;}
+                <div class="col-md-2">Qauntity:&nbsp;<input type="button" name="qty" id=@qtyId value=@item.Quantity class="disabled btn btn-primary" /></div>
+                <div class="col-md-1">
+                    @{string incItemId = "inc" + item.ItemId;}
+                    <button type="button" class="btn btn-success incQty" id=@incItemId><h6>+ Increase</h6></button>
+                </div>
+                <div class="col-md-1">
+                    @{string descItemId = "desc" + item.ItemId;}
+                    <button type="button" class="btn btn-warning descQty" id=@descItemId><h6>- Decrease</h6></button>
+                </div>
+                <div class="col-md-1">
+                    @{ string remItemId = "rm" + item.ItemId;}
+                    <button type="button" class="btn btn-danger rmItem" id=@remItemId><h6>x Remove</h6></button>
+                </div>
+                @{string rate = "rate" + item.ItemId; }
+                @{string unit = "unit" + item.ItemId; }
+                @if (item.Item.Unit.Name == "gram")
+                {
+                    <div class="col-md-2">Weight:&nbsp;<input type="text" id=@wtId name="wt" value=@item.Weight class="btn btn-info mr-1" /></div>
+                }
 
-@if(Session["UserId"]!=null){
-SELECT OUTLET:- <select id="outlet">
-    <option id=13 >Dadar</option>
-    <option id=12 value=12>Goregaon</option>
-    <option id=12>Thane</option>
-    <option id=12>Panvel</option>
-</select>
-<div class="row">
-    <div class="col-md-3 col-md-offset-6"><a type="button" id="ckOut" class="btn btn-success">CHECKOUT</a></div>
-</div>
+                @*@if (item.Item.Unit.Name == "gram") { getPrice((int)item.Quantity, (int)item.Weight, (int)item.Item.Price, item.Item.Unit.Name); } else { getPrice((int)item.Quantity, 1, (int)item.Item.Price, item.Item.Unit.Name); }*@
+
+                <div class="col-md-1 col-md-offset-1 mx-1"><label class="btn disabled btn-lg btn-primary" id=@rate name="rate">@getPrice((int)item.Quantity, (int)item.Weight, (int)item.Item.Price, item.Item.Unit.Name)</label></div>
+                <div class="col-md-1"><label name="unit" class="btn disabled btn-info" id=@unit>@item.Item.Unit.Name</label></div>
+                @{ string fixedRt = "rt" + item.ItemId;}
+                <span id=@fixedRt hidden>@item.Item.Price</span>
+            </div>
+            @{ string submitBtnId = "sub" + item.ItemId;}
+            <button type="submit" id=@submitBtnId class="btn btn-primary btn-xs col-md-2 col-md-offset-5">Update</button>
+        </form>
+    </div>
 }
+<div>
+    SELECT OUTLET:- <select id="outlet">
+        <option id=13>Dadar</option>
+        <option id=12 value=12>Goregaon</option>
+        <option id=12>Thane</option>
+        <option id=12>Panvel</option>
+    </select>
+    <div class="row">
+        <div class="col-md-3 col-md-offset-6"><a type="button" href="Checkout" class="btn btn-success">CHECKOUT</a></div>
+    </div>
+</div>
 <script>
 
     $("#ckOut").click(() => {
