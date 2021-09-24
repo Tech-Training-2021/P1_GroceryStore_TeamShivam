@@ -51,7 +51,6 @@ namespace NatureFresh.Controllers
             var items = repo.GetCartItems((int)Session["UserId"]);
             return View(items);
         }
-
         public ActionResult Checkout(int? OutletId)
         {
             int sessionId = Convert.ToInt32(Session["UserId"]);

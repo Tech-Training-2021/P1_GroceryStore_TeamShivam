@@ -66,11 +66,34 @@
 </div>
 }
 
+@if(Session["UserId"]!=null){
+SELECT OUTLET:- <select id="outlet">
+    <option id=13 >Dadar</option>
+    <option id=12 value=12>Goregaon</option>
+    <option id=12>Thane</option>
+    <option id=12>Panvel</option>
+</select>
 <div class="row">
-    <div class="col-md-3 col-md-offset-6"><a type="button" href="Checkout" class="btn btn-success">CHECKOUT</a></div>
+    <div class="col-md-3 col-md-offset-6"><a type="button" id="ckOut" class="btn btn-success">CHECKOUT</a></div>
 </div>
-
+}
 <script>
+
+    $("#ckOut").click(() => {
+        console.log($("#outlet").val());
+        $.ajax({
+            url: "Checkout",
+            type: "post",
+            data: parseInt($("#outlet").val()),
+            success: () => {
+
+            },
+            error: () => {
+
+            }
+        })
+    })
+
     $(".incQty").click((e) => {
         var id = e.currentTarget.id.substring(3);
         var qtyElem = parseInt($("#qty" + id).val());
